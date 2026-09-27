@@ -31,7 +31,28 @@ ToolRegistry.initialize();
 // Global Middlewares
 app.use(
   cors({
-    origin: env.CLIENT_URL,
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like mobile apps, curl, Postman)
+      if (!origin) return callback(null, true);
+      
+      // List of allowed origins
+      const allowedOrigins = [
+        env.CLIENT_URL,
+        'http://localhost:3000',
+        'http://localhost:5173',
+      ];
+      
+      // In production, allow Vercel preview deployments
+      if (origin.includes('vercel.app')) {
+        return callback(null, true);
+      }
+      
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
   })
 );

@@ -1,10 +1,13 @@
-node_modules
+# Ignore backend since it's deployed separately
+backend/
+
+# Ignore build artifacts (Vercel will regenerate)
+node_modules/
+dist/
+.git/
+
+# Ignore environment files
 .env
 .env.local
 *.log
 .DS_Store
-backend/node_modules
-frontend/node_modules
-backend/dist
-frontend/dist
-.git

@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-// Use environment variable for API URL, fallback to relative path for local dev
+// Use environment variable for API URL
+// In development with proxy: use relative /api
+// In production: must set VITE_API_URL to backend URL
 const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
 const api = axios.create({
