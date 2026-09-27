@@ -13,6 +13,10 @@ import { InterviewAgent } from './implementations/InterviewAgent';
 import { CustomerPersonaAgent } from './implementations/CustomerPersonaAgent';
 import { BusinessModelAgent } from './implementations/BusinessModelAgent';
 import { MVPStrategyAgent } from './implementations/MVPStrategyAgent';
+// SDLC / Modernization Agents
+import { CodeAnalysisAgent } from './implementations/CodeAnalysisAgent';
+import { ArchitectureModernizationAgent } from './implementations/ArchitectureModernizationAgent';
+import { TestStrategyAgent } from './implementations/TestStrategyAgent';
 
 export class AgentRegistry {
   private static agents = new Map<string, BaseAgent>();
@@ -35,6 +39,10 @@ export class AgentRegistry {
       new CustomerPersonaAgent(),
       new BusinessModelAgent(),
       new MVPStrategyAgent(),
+      // SDLC / Modernization Agents
+      new CodeAnalysisAgent(),
+      new ArchitectureModernizationAgent(),
+      new TestStrategyAgent(),
     ];
 
     defaultAgents.forEach((agent) => {

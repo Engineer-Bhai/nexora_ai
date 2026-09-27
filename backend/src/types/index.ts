@@ -91,7 +91,7 @@ export interface IProfile {
 // ==========================================
 // 2. Goal Types
 // ==========================================
-export type GoalType = 'career' | 'startup' | 'business' | 'product_launch' | 'personal_brand' | 'freelance' | 'custom';
+export type GoalType = 'career' | 'startup' | 'business' | 'product_launch' | 'personal_brand' | 'freelance' | 'sdlc' | 'custom';
 export type GoalStatus = 'draft' | 'analyzing' | 'clarification_needed' | 'planned' | 'executing' | 'completed' | 'paused' | 'failed';
 
 export interface IExtractedGoalData {
@@ -202,7 +202,7 @@ export interface IAgentDefinition {
   name: string;
   role: string;
   description: string;
-  category: 'career' | 'startup' | 'core' | 'content' | 'tool';
+  category: 'career' | 'startup' | 'core' | 'content' | 'tool' | 'sdlc';
   systemPrompt: string;
   allowedTools: string[];
   knowledgeAccess: boolean;

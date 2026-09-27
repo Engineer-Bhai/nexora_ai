@@ -43,7 +43,7 @@ export abstract class BaseAgent {
   abstract readonly name: string;
   abstract readonly role: string;
   abstract readonly description: string;
-  abstract readonly category: 'career' | 'startup' | 'core' | 'content' | 'tool';
+  abstract readonly category: 'career' | 'startup' | 'core' | 'content' | 'tool' | 'sdlc';
   abstract readonly systemPrompt: string;
   abstract readonly allowedTools: string[];
   readonly confidenceThreshold: number = 75;

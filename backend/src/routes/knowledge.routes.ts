@@ -6,6 +6,7 @@ import { IngestionService } from '../rag/ingestion';
 import { RetrievalService } from '../rag/retrieval';
 import { MemoryManager } from '../memory/memoryManager';
 import { Document, DocumentChunk } from '../models/Document';
+import { seedLegacyDemoDocument } from '../rag/legacyDemoSeed';
 
 const router = Router();
 
@@ -190,6 +191,28 @@ router.get(
       res.json(memory);
     } catch (err: any) {
       res.status(500).json({ error: 'Failed to assemble memory', details: err.message });
+    }
+  }
+);
+
+/**
+ * @route   POST /api/knowledge/seed-demo
+ * @desc    Seeds the fictional RetailCore legacy architecture document for SDLC demo
+ * @access  Private
+ */
+router.post(
+  '/seed-demo',
+  authenticate,
+  async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+    try {
+      await seedLegacyDemoDocument(req.user!._id);
+      res.json({
+        message: 'Demo legacy architecture document seeded successfully into Knowledge Hub',
+        document: 'RetailCore Enterprise Platform — Legacy Architecture Document v3.2',
+        note: 'This is a fictional document for demonstration purposes only',
+      });
+    } catch (err: any) {
+      res.status(500).json({ error: 'Demo seed failed', details: err.message });
     }
   }
 );

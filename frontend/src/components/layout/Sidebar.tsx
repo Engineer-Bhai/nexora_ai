@@ -20,14 +20,14 @@ interface SidebarProps {
 export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab }) => {
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { id: 'onboarding', label: 'Goal Intake', icon: Target },
+    { id: 'onboarding', label: 'New Goal / SDLC Demo', icon: Target },
     { id: 'workflows', label: 'DAG Workflows', icon: GitFork },
-    { id: 'career', label: 'Career Suite', icon: Briefcase },
-    { id: 'startup', label: 'Startup Workspace', icon: Rocket },
     { id: 'knowledge', label: 'RAG Knowledge Hub', icon: Brain },
-    { id: 'approvals', label: 'Approvals & Tools', icon: ShieldCheck },
+    { id: 'approvals', label: 'Governance & Tools', icon: ShieldCheck },
     { id: 'analytics', label: 'Analytics & Telemetry', icon: BarChart3 },
     { id: 'agents', label: 'Agent Registry', icon: Bot },
+    { id: 'career', label: 'Career Suite', icon: Briefcase },
+    { id: 'startup', label: 'Startup Workspace', icon: Rocket },
   ];
 
   return (
@@ -74,7 +74,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab }) => 
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399] animate-pulse"></span>
               <span className="font-semibold text-slate-200 text-[11px] truncate">Nexora Engine</span>
             </div>
-            <div className="text-[9.5px] text-slate-400 truncate">13 Agents & RAG Online</div>
+            <div className="text-[9.5px] text-slate-400 truncate">16 Agents & RAG Online</div>
           </div>
         </div>
       </div>

@@ -91,6 +91,7 @@ export const knowledgeApi = {
   deleteDocument: (id: string) => api.delete(`/knowledge/documents/${id}`),
   queryKnowledge: (data: any) => api.post('/knowledge/query', data),
   getMemoryContext: (params?: any) => api.get('/knowledge/memory', { params }),
+  seedDemo: () => api.post('/knowledge/seed-demo'),
 };
 
 export const toolsApi = {

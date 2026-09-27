@@ -18,14 +18,28 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onNavigate, setActiveGoa
 
   const presets = [
     {
+      type: 'sdlc',
+      title: 'Modernize RetailCore Legacy Java Monolith',
+      prompt: "Analyze the RetailCore legacy enterprise application — a 480,000-line Spring 4 / Java 8 monolith with 47-dependency god classes, EOL technology stack, and 12% test coverage. Create a dependency-aware modernization plan that identifies service boundaries, API contracts, strangler-fig migration strategy, testing requirements, and phased execution roadmap.",
+      badge: '⭐ SDLC Demo',
+    },
+    {
+      type: 'sdlc',
+      title: 'Legacy Microservices Migration Strategy',
+      prompt: "We have a 10-year-old monolithic e-commerce platform built on outdated technology. I need a comprehensive modernization plan: identify service decomposition candidates, define API contracts, design event-driven communication, plan the testing strategy, and create a phased migration roadmap with risk assessment.",
+      badge: 'SDLC',
+    },
+    {
       type: 'career',
       title: 'Senior AI & Full-Stack Engineer at Top Tier Tech',
       prompt: "I want to secure a Senior AI Systems / Full-Stack Engineer position at a top-tier tech firm within 6 months. I have React and Node.js projects, but need structured ATS resume optimization, LeetCode DSA syllabus, system design prep, and company outreach.",
+      badge: 'Career',
     },
     {
       type: 'startup',
       title: 'Launch NexusAI Autonomous Agent CRM',
       prompt: "I want to build, validate, and launch NexusAI - an autonomous AI agent CRM for B2B sales teams that automates prospect research, hyper-personalized email sequences, and meeting scheduling.",
+      badge: 'Startup',
     },
   ];
 
@@ -101,32 +115,54 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onNavigate, setActiveGoa
       <div className="text-center space-y-3">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/30 text-brand-300 text-xs font-semibold">
           <Sparkles className="h-3.5 w-3.5 text-cyan-400" />
-          <span>Dynamic AI Orchestration Onboarding</span>
+          <span>Autonomous SDLC & Multi-Agent Orchestration</span>
         </div>
         <h1 className="text-3xl font-extrabold text-white tracking-tight">
-          What is your primary goal?
+          What engineering challenge do you want to solve?
         </h1>
         <p className="text-sm text-slate-400 max-w-xl mx-auto leading-relaxed">
-          Describe what you want to achieve in natural language. The Goal Understanding Agent will analyze missing requirements and assemble a tailored multi-agent team.
+          Describe your goal in natural language. The AI Orchestrator will analyze context, decompose the work into a dependency-aware DAG, and deploy specialized engineering agents.
         </p>
       </div>
 
       {step === 'input' && (
         <div className="glass-panel p-10 space-y-10">
+          {/* SDLC Demo Banner */}
+          <div className="p-4 rounded-xl bg-gradient-to-r from-brand-600/10 to-cyan-600/10 border border-brand-500/30">
+            <div className="flex items-start gap-3">
+              <div className="text-2xl">⚡</div>
+              <div>
+                <div className="text-xs font-bold text-brand-300 uppercase tracking-wider">IBM Bob 2.0 Hackathon — Primary Demo</div>
+                <p className="text-xs text-slate-300 mt-0.5">
+                  Select the <span className="font-bold text-cyan-300">⭐ SDLC Demo</span> preset below to launch the Autonomous Legacy Modernization workflow.
+                  It demonstrates: <span className="text-white">Goal Analysis → DAG Planning → Code Analysis Agent → Architecture Modernization Agent → Test Strategy Agent → Verification → Human Approval</span>
+                </p>
+              </div>
+            </div>
+          </div>
+
           {/* Presets */}
           <div>
-            <div className="text-xs font-semibold text-slate-400 mb-4">Or choose a benchmark preset:</div>
+            <div className="text-xs font-semibold text-slate-400 mb-4">Quick-start presets:</div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {presets.map((p, i) => (
                 <button
                   key={i}
                   type="button"
                   onClick={() => handleApplyPreset(p)}
-                  className="p-5 rounded-xl bg-surface-950/50 border border-white/5 hover:border-brand-500/40 text-left transition-all group"
+                  className={`p-5 rounded-xl border text-left transition-all group ${
+                    (p as any).badge === '⭐ SDLC Demo'
+                      ? 'bg-brand-600/10 border-brand-500/50 hover:border-brand-400'
+                      : 'bg-surface-950/50 border-white/5 hover:border-brand-500/40'
+                  }`}
                 >
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold text-white group-hover:text-brand-300">{p.title}</span>
-                    <span className="text-[10px] px-2 py-0.5 rounded bg-brand-500/20 text-brand-300 capitalize">{p.type}</span>
+                    <span className={`text-[10px] px-2 py-0.5 rounded font-bold ${
+                      (p as any).badge === '⭐ SDLC Demo'
+                        ? 'bg-brand-500 text-white'
+                        : 'bg-brand-500/20 text-brand-300'
+                    }`}>{(p as any).badge}</span>
                   </div>
                   <p className="text-[11px] text-slate-400 mt-1 line-clamp-2">{p.prompt}</p>
                 </button>
@@ -140,19 +176,26 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onNavigate, setActiveGoa
               <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
                 Goal Category
               </label>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                {['career', 'startup', 'business', 'product_launch'].map((t) => (
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                {[
+                  { value: 'sdlc', label: '⚡ SDLC Modernization' },
+                  { value: 'career', label: 'Career' },
+                  { value: 'startup', label: 'Startup' },
+                  { value: 'business', label: 'Business' },
+                  { value: 'product_launch', label: 'Product Launch' },
+                  { value: 'custom', label: 'Custom' },
+                ].map(({ value, label }) => (
                   <button
-                    key={t}
+                    key={value}
                     type="button"
-                    onClick={() => setGoalType(t)}
-                    className={`py-2 px-3 rounded-xl text-xs font-semibold capitalize transition-all ${
-                      goalType === t
+                    onClick={() => setGoalType(value)}
+                    className={`py-2 px-3 rounded-xl text-xs font-semibold transition-all ${
+                      goalType === value
                         ? 'bg-brand-600 text-white border border-brand-400 shadow-glow'
                         : 'bg-surface-950/70 border border-white/5 text-slate-400 hover:text-slate-200'
                     }`}
                   >
-                    {t.replace('_', ' ')}
+                    {label}
                   </button>
                 ))}
               </div>

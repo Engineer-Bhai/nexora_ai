@@ -42,6 +42,9 @@ Available Agents:
 - strategy_agent (Synthesize research into 30/60/90 day execution roadmap)
 - content_agent (Generate cover letters, outreach messages, launch posts)
 - verification_agent (Validate results, quality control check)
+- code_analysis_agent (Legacy codebase analysis: technical debt, coupling hotspots, service boundary candidates)
+- architecture_modernization_agent (Microservices decomposition, API contracts, strangler-fig migration strategy)
+- test_strategy_agent (Testing pyramid, contract tests, CI quality gates, migration regression plan)
 
 Rules:
 1. Define a clear dependency graph (e.g. market_research -> skill_gap -> strategy).
@@ -58,7 +61,7 @@ Respond STRICTLY in JSON format with keys:
       "tempId": "task_1",
       "title": "string",
       "description": "string",
-      "agentType": "resume_agent" | "job_matching_agent" | "company_research_agent" | "interview_agent" | "customer_persona_agent" | "market_research_agent" | "competitor_agent" | "business_model_agent" | "mvp_strategy_agent" | "strategy_agent" | "content_agent" | "verification_agent",
+      "agentType": "resume_agent" | "job_matching_agent" | "company_research_agent" | "interview_agent" | "customer_persona_agent" | "market_research_agent" | "competitor_agent" | "business_model_agent" | "mvp_strategy_agent" | "strategy_agent" | "content_agent" | "verification_agent" | "code_analysis_agent" | "architecture_modernization_agent" | "test_strategy_agent",
       "dependsOn": [],
       "inputPayload": {}
     }
@@ -161,7 +164,64 @@ Generate the multi-agent DAG task plan now in JSON format.`;
   }
 
   private static getDefaultPlanForGoal(goal: IGoal): PlanGenerationResult {
-    const isStartup = goal.goalType === 'startup';
+    const goalType = goal.goalType || 'career';
+
+    // SDLC / Legacy Modernization Plan
+    if (goalType === 'sdlc') {
+      return {
+        workflowTitle: `Legacy Modernization Plan: ${goal.title}`,
+        description: 'Autonomous SDLC workflow: legacy code analysis → architecture modernization strategy → testing strategy → verification',
+        tasks: [
+          {
+            tempId: 'task_1',
+            title: 'Legacy Code & Technical Debt Analysis',
+            description:
+              'Analyze the legacy codebase for coupling hotspots, EOL dependencies, service boundary candidates, and quantify technical debt. Uses RAG context from uploaded architecture documents.',
+            agentType: 'code_analysis_agent',
+            dependsOn: [],
+            inputPayload: { includeRagContext: true, focus: 'technical_debt_and_boundaries' },
+          },
+          {
+            tempId: 'task_2',
+            title: 'Architecture Modernization & Migration Strategy',
+            description:
+              'Design strangler-fig decomposition plan with phased service extraction, API contracts, event-driven boundaries, and risk-ranked milestones. Grounded in code analysis findings.',
+            agentType: 'architecture_modernization_agent',
+            dependsOn: ['task_1'],
+            inputPayload: { approach: 'strangler_fig', includeApiContracts: true },
+          },
+          {
+            tempId: 'task_3',
+            title: 'Testing & Quality Assurance Strategy',
+            description:
+              'Define testing pyramid, contract testing plan, CI/CD quality gates, migration regression checkpoints, and performance baselines for the modernization project.',
+            agentType: 'test_strategy_agent',
+            dependsOn: ['task_2'],
+            inputPayload: { includeContractTests: true, includeCiGates: true },
+          },
+          {
+            tempId: 'task_4',
+            title: 'Modernization Strategy Synthesis & Executive Roadmap',
+            description:
+              'Synthesize all findings into a phased 30/60/90-day executive roadmap with clear milestones, KPIs, and risk mitigations for stakeholder presentation.',
+            agentType: 'strategy_agent',
+            dependsOn: ['task_3'],
+            inputPayload: { format: 'executive_roadmap', includeKPIs: true },
+          },
+          {
+            tempId: 'task_5',
+            title: 'Output Verification & Quality Assurance',
+            description:
+              'Verify the accuracy, completeness, and actionability of the full modernization plan. Score against technical grounding, feasibility, and stakeholder-readiness.',
+            agentType: 'verification_agent',
+            dependsOn: ['task_4'],
+            inputPayload: { checkFactualGrounding: true, checkActionability: true },
+          },
+        ],
+      };
+    }
+
+    const isStartup = goalType === 'startup';
 
     if (isStartup) {
       return {

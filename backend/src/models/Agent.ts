@@ -9,7 +9,7 @@ const agentDefinitionSchema = new Schema<IAgentDefinition>(
     description: { type: String, required: true },
     category: {
       type: String,
-      enum: ['career', 'startup', 'core', 'content', 'tool'],
+      enum: ['career', 'startup', 'core', 'content', 'tool', 'sdlc'],
       required: true,
     },
     systemPrompt: { type: String, required: true },

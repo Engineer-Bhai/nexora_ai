@@ -41,7 +41,7 @@ const goalSchema = new Schema<IGoal>(
     rawPrompt: { type: String, required: true },
     goalType: {
       type: String,
-      enum: ['career', 'startup', 'business', 'product_launch', 'personal_brand', 'freelance', 'custom'],
+      enum: ['career', 'startup', 'business', 'product_launch', 'personal_brand', 'freelance', 'sdlc', 'custom'],
       default: 'career',
     },
     status: {

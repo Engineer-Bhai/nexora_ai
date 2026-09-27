@@ -22,6 +22,7 @@ export const KnowledgeHub: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [extracting, setExtracting] = useState(false);
+  const [seedingDemo, setSeedingDemo] = useState(false);
   const [searching, setSearching] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<any[]>([]);
@@ -52,6 +53,21 @@ export const KnowledgeHub: React.FC = () => {
       console.error('Failed to load documents', err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleSeedDemo = async () => {
+    setSeedingDemo(true);
+    setError(null);
+    setSuccess(null);
+    try {
+      const res = await knowledgeApi.seedDemo();
+      setSuccess(res.data.message || 'Demo legacy architecture document seeded successfully!');
+      fetchDocuments();
+    } catch (err: any) {
+      setError(err.response?.data?.error || 'Demo seed failed');
+    } finally {
+      setSeedingDemo(false);
     }
   };
 
@@ -261,28 +277,40 @@ A deterministic DAG-driven multi-agent platform combining RAG vector memory with
               🧠 RAG Knowledge Hub & 3-Tier Memory
             </h1>
             <p className="text-xs text-slate-400 mt-1">
-              Upload resumes, business plans, and market reports. Automatic chunking, vector embedding generation, and cosine similarity retrieval across the 13-agent fleet.
+              Upload architecture documents, resumes, and business plans. Automatic chunking, vector embedding, and semantic retrieval across the 16-agent fleet.
             </p>
           </div>
 
           {/* Preset Sample Triggers */}
-          <div className="flex items-center gap-2">
+          <div className="flex flex-col gap-2">
+            {/* SDLC Demo Seed — Primary */}
             <button
               type="button"
-              onClick={() => handleLoadSample('resume')}
-              className="px-3 py-1.5 rounded-xl bg-surface-950 border border-white/10 hover:border-brand-500/40 text-slate-300 hover:text-white text-xs font-semibold transition-all flex items-center gap-1.5"
+              onClick={handleSeedDemo}
+              disabled={seedingDemo}
+              className="px-3 py-2 rounded-xl bg-brand-600/20 border border-brand-500/50 hover:bg-brand-600/30 text-brand-300 hover:text-white text-xs font-bold transition-all flex items-center gap-1.5 disabled:opacity-50"
             >
-              <FileText className="h-3.5 w-3.5 text-cyan-400" />
-              <span>Sample Resume</span>
+              {seedingDemo ? <RefreshCw className="h-3.5 w-3.5 animate-spin" /> : <Layers className="h-3.5 w-3.5 text-cyan-400" />}
+              <span>⭐ Load SDLC Demo Document</span>
             </button>
-            <button
-              type="button"
-              onClick={() => handleLoadSample('pitch')}
-              className="px-3 py-1.5 rounded-xl bg-surface-950 border border-white/10 hover:border-brand-500/40 text-slate-300 hover:text-white text-xs font-semibold transition-all flex items-center gap-1.5"
-            >
-              <Sparkles className="h-3.5 w-3.5 text-emerald-400" />
-              <span>Sample Pitch Deck</span>
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => handleLoadSample('resume')}
+                className="px-3 py-1.5 rounded-xl bg-surface-950 border border-white/10 hover:border-brand-500/40 text-slate-300 hover:text-white text-xs font-semibold transition-all flex items-center gap-1.5"
+              >
+                <FileText className="h-3.5 w-3.5 text-cyan-400" />
+                <span>Sample Resume</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => handleLoadSample('pitch')}
+                className="px-3 py-1.5 rounded-xl bg-surface-950 border border-white/10 hover:border-brand-500/40 text-slate-300 hover:text-white text-xs font-semibold transition-all flex items-center gap-1.5"
+              >
+                <Sparkles className="h-3.5 w-3.5 text-emerald-400" />
+                <span>Sample Pitch Deck</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>

@@ -17,6 +17,7 @@ const createGoalSchema = z.object({
     'product_launch',
     'personal_brand',
     'freelance',
+    'sdlc',
     'custom',
   ]).default('career'),
   targetDate: z.string().datetime().optional().or(z.string().optional()),
